@@ -3,6 +3,7 @@ class BooksController < ApplicationController
   end
 
   def create
+    render plain: params[:book].inspect
   end
 
 end
