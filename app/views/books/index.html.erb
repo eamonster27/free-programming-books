@@ -1,20 +1,16 @@
 <h1>Listing books</h1>
-<%= link_to 'New book', new_book_path %>
-<table>
-  <tr>
-    <th>Title</th>
-    <th>Description</th>
-  </tr>
 
-  <% @books.each do |book| %>
-    <tr>
-      <td><%= book.title %></td>
-      <td><%= book.description %></td>
-      <td><%= link_to 'Show', book_path(book) %></td>
-      <td><%= link_to 'Edit', edit_book_path(book) %></td>
-      <td><%= link_to 'Destroy', book_path(book),
-        method: :delete,
-        data: { confirm: 'Are you sure?'}%></td>
-    </tr>
-  <% end %>
-</table>
+<%= link_to 'New book', new_book_path %>
+
+
+
+<% @books.each do |book| %>
+  <h4><%= link_to book.title, book_path(id: book.id) %></h4>
+  <%= truncate book.description%>
+  <p>Posted by: <%= link_to book.user.username, user_path(username: book.user.username) %></p>
+  <span><%= link_to 'Show', book_path(book) %></span>
+  <span><%= link_to 'Edit', edit_book_path(book) %></span>
+  <span><%= link_to 'Destroy', book_path(book),
+    method: :delete,
+    data: { confirm: 'Are you sure?'}%></span>
+<% end %>

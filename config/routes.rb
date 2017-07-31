@@ -10,6 +10,8 @@ Rails.application.routes.draw do
   get 'register' => 'users#new', as: :registration
   post 'register' => 'users#create'
 
+  get 'users/:username' => 'users#show', as: :user
+
   get 'books' => 'books#index', as: :books
   get 'books/new' => 'books#new', as: :new_book
   post 'books' => 'books#create'

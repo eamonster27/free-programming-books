@@ -7,7 +7,8 @@ class BooksController < ApplicationController
   end
 
   def show
-    @book = Book.find(params[:id])
+    # @book = Book.find(params[:id])
+    @book = Book.find_by id: params[:id]
   end
 
   def index
@@ -21,7 +22,7 @@ class BooksController < ApplicationController
   def edit
     @book = Book.find_by id: params[:id]
     unless @book.user == @current_user
-      redirect_to root_path, notice: "Bad User!"
+      redirect_to books_path, notice: "Not your post"
     end
   end
 
@@ -37,8 +38,8 @@ class BooksController < ApplicationController
 
   def update
     @book = Book.find_by id: params[:id]
-    unless @article.user == @current_user
-      redirect_to root_path, notice: "Bad User!"
+    unless @book.user == @current_user
+      redirect_to books_path, notice: "Not your post"
     end
 
     @book.title = params[:book][:title]
@@ -53,8 +54,14 @@ class BooksController < ApplicationController
   end
 
   def destroy
-    Book.destroy params[:id]
-    redirect_to books_path
+    @book = Book.find_by id: params[:id]
+    if @book.user == @current_user
+      Book.destroy params[:id]
+      redirect_to books_path
+    else
+      redirect_to books_path, notice: "Not your post"
+    end
+
   end
 
   private
